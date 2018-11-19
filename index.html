@@ -4,15 +4,30 @@
 <button id="button">打钱</button>
 <script>
   button.addEventListener('click',(e)=>{
-    let image = document.createElement('img')
-    image.src = '/pay'
-    image.onload = function(){
+    let script = document.createElement('script')
+    script.src = '/pay' //只是这样是不行的
+    document.body.appendChild(script)
+    script.onload = function(){
       alert('打钱成功')
       amount.innerText = amount.innerText - 1
     }
-    image.onerror = function(){
+    script.onerror = function(){
       alert('打钱失败')
     }
+    
+    
+    
+    
+    
+    // let image = document.createElement('img')
+    // image.src = '/pay'
+    // image.onload = function(){
+    //   alert('打钱成功')
+    //   amount.innerText = amount.innerText - 1
+    // }
+    // image.onerror = function(){
+    //   alert('打钱失败')
+    // }
   })
 </script>
 
