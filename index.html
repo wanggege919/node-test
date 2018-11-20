@@ -7,12 +7,12 @@
     let script = document.createElement('script')
     script.src = '/pay' //只是这样是不行的
     document.body.appendChild(script)
-    script.onload = function(){
-      alert('打钱成功')
-      amount.innerText = amount.innerText - 1
+    script.onload = function(e){
+      e.currentTarget.remove()
     }
-    script.onerror = function(){
+    script.onerror = function(e){
       alert('打钱失败')
+      e.currentTarget.remove()
     }
     
     
