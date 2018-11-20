@@ -16,11 +16,11 @@ var server = http.createServer(function(request, response){
   var path = parsedUrl.pathname
   var query = parsedUrl.query
   var method = request.method
-
+ 
+  
   /******** 从这里开始看，上面不要看 ************/
 
   //console.log('方方说：含查询字符串的路径\n' + pathWithQuery)
-
 
   if(path === '/'){
     let string = fs.readFileSync('./index.html', 'utf8')
@@ -53,19 +53,15 @@ var server = http.createServer(function(request, response){
 
     response.end()
   }else if(path === '/pay'){
-    var amount = fs.readFileSync('./db', 'utf8')
-    var newAmount = amount - 1
-    if(Math.random()>0.5){
-      fs.writeFileSync('./db', newAmount)
-      response.setHeader('Content-Type','application/javascript')
-      response.statusCode = 200
-      response.write(`amount.innerText = amount.innerText - 1`)
-      response.end()
-    }else{
-      response.statusCode = 400
-      response.write('fail')    
-    }
-     response.end()
+    let amount = fs.readFileSync('./db', 'utf8')
+    amount -= 1
+    fs.writeFileSync('./db', amount)
+    let callbackName = query.callback
+    response.setHeader('Content-Type', 'application/javascript')
+    response.write(`
+        ${callbackName}.call(undefined, 'success')
+    `)
+    response.end()
   }else{
     response.statusCode = 404
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
